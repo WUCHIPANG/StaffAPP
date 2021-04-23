@@ -1,0 +1,91 @@
+// Here you can add other styles
+@mixin Mobile {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin Landscape {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+// 筆電
+@mixin Laptop {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+// menu
+.c-sidebar-nav-dropdown-items {
+  li {
+    a {
+      svg {
+        width: 15px;
+        height: 15px;
+        padding-left: 20px;
+        margin-right: 7px;
+      }
+    }
+  }
+}
+// radio button
+.radio {
+  // padding-left: 5px;
+  // padding-top: 5px;
+  // line-height: 17px;
+  input[type='radio'] {
+    opacity: 0;
+  }
+  input[type='radio']:checked + label:before,
+  input[type='radio'] + label:before {
+    content: '';
+    height: 17px;
+    width: 17px;
+    display: block;
+    border: 0.125rem solid #aaa;
+    border-radius: 50%;
+    position: absolute;
+    margin-left: -1.5rem;
+  }
+  input[type='radio']:checked + label:before {
+    box-shadow: 0.125rem 0.125rem 0 #fff inset, -0.125rem -0.125rem 0 #fff inset, -0.125rem 0.125rem 0 #fff inset, 0.125rem -0.125rem 0 #fff inset, 0.3rem 0.3rem 0 #aaa inset,
+      -0.5rem -0.5rem 0 #bbb inset;
+  }
+  label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 0.5rem;
+  }
+}
+// AddTask
+#reservation {
+  display: none;
+}
+.positionR {
+  position: relative;
+  height: 50px;
+}
+.sendButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 150px;
+}
+.cancelButton {
+  position: absolute;
+  bottom: 0;
+  right: 250px;
+  width: 150px;
+}
+// currentlytask
+.dragVerify {
+  margin: 10px 0 20px 0;
+}
+.contentFont {
+  height: 25px;
+}
+// taskContent
+.textHight {
+  height: 30px;
+}
