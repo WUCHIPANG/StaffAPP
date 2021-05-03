@@ -21,7 +21,7 @@ function configRoutes () {
     {
       path: '/',
       redirect: '/waitingtask',
-      name: 'Home',
+      name: '首頁',
       meta: {
           requireAuth: true,
          },
@@ -31,32 +31,37 @@ function configRoutes () {
 
         {
           path: 'waitingtask',
-          name: 'Waiting Task',
+          name:'待接派單',
           component: resolve => require(['@/views/WaitingTask'], resolve)
+        },
+         {
+          path: 'account',
+          name: '帳號資訊',
+          component: resolve => require(['@/views/staff/Account'], resolve)
         },
         {
           path: 'currentlytask/:num',
-          name: 'Currently Task',
+          name: '當前派單',
           component: resolve => require(['@/views/staff/CurrentlyTask'], resolve)
         },
         {
           path: 'currentlytask',
-          name: 'Currently Task',
+          name: '當前派單',
           component: resolve => require(['@/views/staff/CurrentlyTask'], resolve)
         },
         {
           path: 'interrupt',
-          name: 'Interrupt',
+          name: '中斷/異常通報',
           component: resolve => require(['@/views/staff/Interrupt'], resolve)
         },
         {
           path: 'historytask',
-          name: 'History Task',
+          name: '歷史接單',
           component: resolve => require(['@/views/staff/HistoryTask'], resolve)
         },
         {
           path: 'attendance',
-          name: 'Attendance',
+          name: '出勤紀錄',
           component: resolve => require(['@/views/staff/Attendance'], resolve)
         },
         {

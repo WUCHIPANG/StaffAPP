@@ -1,5 +1,5 @@
 <template>
-  <CSidebar fixed :minimize="minimize" :show="show" @update:show="(value) => $store.commit('set', ['sidebarShow', value])">
+  <CSidebar fixed :minimize="minimize" :show="show" @update:show="(value) => $store.commit('set', ['sidebarShow', value])" style="font-size:18px;">
     <CSidebarBrand class="d-md-down-none" to="/">
       <!-- 網頁版LOGO -->
       <!-- <CIcon class="c-sidebar-brand-full" name="logo" size="custom-size" :height="35" viewBox="0 0 556 134" /> -->
@@ -30,7 +30,13 @@ export default {
           _children: [
             {
               _name: 'CSidebarNavTitle',
-              _children: ['派遣APP'],
+              _children: ['傳送人員'],
+            },
+            {
+              _name: 'CSidebarNavItem',
+              name: '帳號資訊',
+              to: '/account',
+              icon: 'cil-user',
             },
             {
               _name: 'CSidebarNavItem',

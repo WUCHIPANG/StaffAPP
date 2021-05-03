@@ -1,21 +1,26 @@
 <template>
-  <div>
+  <div style="font-size:28px;">
     <CCard>
       <CCardBody>
         <CForm>
+          <div class="positionR">
+            <CButton block color="dark" type="submit" variant="outline" class="sendButton" @click="passcallback1()" size="lg">派單中斷回報</CButton>
+          </div>
           <CRow>
             <CCol sm="3">派單編號</CCol>
             <CCol sm="9" class="contentFont">{{ this.$route.params.num }}</CCol>
           </CRow>
+
           <CRow>
             <CCol sm="3">時間</CCol>
             <CCol sm="9" class="contentFont">2021/04/09 10:52:16</CCol>
           </CRow>
-          <CInput label="任務內容" placeholder="檢體運送" horizontal disabled />
+          <CInput label="任務內容" placeholder="領藥" horizontal disabled />
+          <CTextarea label="" placeholder="藥品名稱A,藥品名稱C" horizontal rows="9" disabled />
           <CInput label="起始地點" placeholder="2F藥局" horizontal disabled />
           <CInput label="目的地" placeholder="10F護理站" horizontal disabled />
 
-          <CTextarea label="備註" placeholder="Content..." horizontal rows="9" disabled />
+          <CTextarea label="備註" placeholder="" horizontal rows="9" disabled />
         </CForm>
       </CCardBody>
       <CCardFooter style="margin:auto;">
@@ -36,7 +41,7 @@
           >
           </drag-verify>
         </div>
-        <div class="dragVerify">
+        <!-- <div class="dragVerify">
           <drag-verify
             ref="dragVerify"
             :width="300"
@@ -52,7 +57,7 @@
             @passcallback="passcallback1"
           >
           </drag-verify>
-        </div>
+        </div> -->
       </CCardFooter>
     </CCard>
   </div>

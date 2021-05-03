@@ -1,7 +1,7 @@
 <template>
-  <CCard>
+  <CCard style="font-size:24px;">
     <CCardBody>
-      <CDataTable :items="items" :fields="fields" table-filter items-per-page-select :items-per-page="10" hover sorter pagination> </CDataTable>
+      <CDataTable :items="items" :fields="fields" table-filter column-filter hover sorter pagination> </CDataTable>
     </CCardBody>
   </CCard>
 </template>
@@ -39,8 +39,8 @@ export default {
     fields() {
       return [
         { key: 'date', label: '日期' },
-        { key: 'start', label: '上班時間' },
-        { key: 'complete', label: '下班時間' },
+        { key: 'start', label: '上班' },
+        { key: 'complete', label: '下班' },
         // { key: 'task', label: '任務內容' },
         // {
         //   key: 'show_details',
