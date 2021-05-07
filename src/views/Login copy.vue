@@ -13,7 +13,7 @@ console.log('hello')
                 <CCardBody>
                   <CForm>
                     <h1>傳送人員登入</h1>
-                    <!-- <input type="hidden" id="device_id" value="" />
+                    <input type="hidden" id="device_id" value="" />
 
                     <div class="col-md-5 unbind" style="">
                       <label for="username" class="form-label">綁定名稱：</label><input type="text" id="username" class="form-control" placeholder="請輸入名稱" />
@@ -29,7 +29,7 @@ console.log('hello')
                         >已綁定名稱：
                         <p id="bind_name"></p>
                       </label>
-                    </div> -->
+                    </div>
                     <div class="col-md-5 bind" style="display: none;"><button type="button" id="unbind" class="btn btn-warning" @click="unbind()">解除綁定</button></div>
 
                     <CInput placeholder="帳號" autocomplete="username" v-model="username">
@@ -47,7 +47,8 @@ console.log('hello')
                           size="lg"
                           class="px-4"
                           @click="
-                            login(username, password);                        
+                            login(username, password);
+                            testbtn();
                           "
                           >登入</CButton
                         >
@@ -99,26 +100,26 @@ export default {
        inject: ['messaging'],
     };
   },
-//   setup() {
-//     const messaging = inject('messaging')
+  setup() {
+    const messaging = inject('messaging')
 
-//     console.log('Firebase cloud messaging object', messaging)
-//   },
-//   mounted() {
+    console.log('Firebase cloud messaging object', messaging)
+  },
+  mounted() {
 
-//       console.log('Firebase cloud messaging object', this.$messaging)
-//       messaging.getToken({ vapidKey: 'BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok' })
+      console.log('Firebase cloud messaging object', this.$messaging)
+      messaging.getToken({ vapidKey: 'BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok' })
     
-//     app.messaging().getToken({ vapidKey: 'BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok' })
-// .then((currentToken) => {
-//   if (currentToken) {
-//     console.log('client token', currentToken)
-//   } else {
-//     console.log('No registration token available. Request permission to generate one.');
-//   }
-// }).catch((err) => {
-//   console.log('An error occurred while retrieving token. ', err);
-// })
+    app.messaging().getToken({ vapidKey: 'BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok' })
+.then((currentToken) => {
+  if (currentToken) {
+    console.log('client token', currentToken)
+  } else {
+    console.log('No registration token available. Request permission to generate one.');
+  }
+}).catch((err) => {
+  console.log('An error occurred while retrieving token. ', err);
+})
     //  
     // console.log('123');
     // $('.bind').hide();
@@ -146,16 +147,9 @@ export default {
     //     'json'
     //   );
     // }, 1000);
-//   },
+  },
   methods: {
-    login() {
-let data = {
-          user: this.username,
-          password: secret.Encrypt(this.password),
-        };
-
-        this.$store.dispatch('userLogin', data);
-    },
+    login() {},
     testbtn(event) {
       console.log('測試');
       $('#bind').click(function(event) {
@@ -195,6 +189,14 @@ let data = {
           alert(msg);
         }
       });
+      setTimeout(() => {
+        let data = {
+          user: this.username,
+          password: secret.Encrypt(this.password),
+        };
+
+        this.$store.dispatch('userLogin', data);
+      }, 1000);
     },
     unbind(event) {
       console.log('解除');

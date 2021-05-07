@@ -6,12 +6,12 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import CoreuiVue from '@coreui/vue'
-import { iconsSet as icons } from './assets/icons/icons.js'
+import {iconsSet as icons} from './assets/icons/icons.js'
 import store from '@/sotre'
-window.$ = window.jQuery = require('jquery');
+window.$ = window.jQuery = require('jquery')
+import firebaseMessaging from 'firebase'
 
-
-
+Vue.prototype.$messaging = firebaseMessaging
 Vue.config.performance = true
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
@@ -25,6 +25,6 @@ new Vue({
   icons,
   template: '<App/>',
   components: {
-    App
-  }
+    App,
+  },
 })
