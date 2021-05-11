@@ -5,6 +5,7 @@ Vue.use(Router)
 
 const router = new Router({
   mode: 'hash', // https://router.vuejs.org/api/#mode
+  // mode:'history',
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -99,6 +100,7 @@ function configRoutes () {
   ]
 }
 
+// console.log('router')
 // 要打開(暫時)
 router.beforeEach((to, from, next) => {
    const token = window.sessionStorage.getItem('user')

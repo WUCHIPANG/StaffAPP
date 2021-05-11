@@ -1,6 +1,6 @@
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
 <script>
-console.log('hello')
+console.log('hello');
 </script>
 <template>
   <div>
@@ -13,7 +13,7 @@ console.log('hello')
                 <CCardBody>
                   <CForm>
                     <h1>傳送人員登入</h1>
-                  
+
                     <div class="col-md-5 bind" style="display: none;"><button type="button" id="unbind" class="btn btn-warning" @click="unbind()">解除綁定</button></div>
 
                     <CInput placeholder="帳號" autocomplete="username" v-model="username">
@@ -30,9 +30,16 @@ console.log('hello')
                           id="bind"
                           size="lg"
                           class="px-4"
-                          @click="login(username, password); ">登入</CButton
+                          @click="
+                            registeFCM;
+                            login(username, password);
+                          "
+                          >登入</CButton
                         >
-                        <button @click="registeFCM">Register</button>
+                        <p></p>
+
+                        <button @click="registeFCM">registeFCM</button>
+                        <button @click="unbind">Unbind</button>
                       </CCol>
                       <CCol col="6" class="text-right">
                         <CButton color="link" class="px-0" @click="darkModal = true" size="lg">忘記密碼?</CButton>
@@ -63,16 +70,13 @@ console.log('hello')
   </div>
 </template>
 
-
-
-<script> 
-import 'firebase/messaging'
+<script>
+import 'firebase/messaging';
 import Global from '@/Global';
 const CryptoJS = require('crypto-js');
 import secret from '../utils/secret';
 
 export default {
-
   name: 'Login',
   data() {
     return {
@@ -81,61 +85,121 @@ export default {
       darkModal: false,
     };
   },
-mounted () {
-    console.log('hello')
-    this.initFCM()
+  mounted() {
+    console.log('hello');
+    this.initFCM();
   },
-    methods: {
-           login() {
+  methods: {
+    initFCM() {
+      console.log('initFCM');
+      this.$messaging.onTokenRefresh(() => {
+        this.$messaging.getToken().then((refreshedToken) => {
+          console.log('Token refreshed.');
+          this.setTokenSentToServer(false);
+          this.sendTokenToServer(refreshedToken);
+        });
+      });
+    },
+    registeFCM() {
+      this.$messaging
+        .requestPermission()
+        .then(() => {
+          console.log('Notification permission granted.');
+          this.getToken();
+        })
+        .catch((err) => {
+          console.log('Unable to get permission to notify.', err);
+        });
+    },
+    getToken() {
+      console.log('123');
+      this.$messaging
+        .getToken()
+        .then((currentToken) => {
+          console.log('currentToken1', currentToken);
+          if (currentToken) {
+            console.log('currentToken2', currentToken);
+            this.sendTokenToServer(currentToken);
+            console.log('send');
+          } else {
+            console.log('No Instance ID token available. Request permission to generate one.');
+            console.log('false');
+            // Show permission UI.
+            this.setTokenSentToServer(false);
+          }
+        })
+        .catch((err) => {
+          console.log('An error occurred while retrieving token. ', err);
+          this.setTokenSentToServer(false);
+        });
+    },
+    sendTokenToServer(token) {
+      console.log('Sending token to server...');
+      // TODO: Send Token To Your Server
+      console.log('token', token);
+      $.post(
+        'https://porter-alpha.dynacloud.co/ajax.php',
+        {
+          username: this.username,
+          device_id: token,
+          action: 'bind',
+        },
+        function(result) {
+          if (result.status == true) {
+            window.location.reload();
+          } else {
+            alert(result.message);
+          }
+        },
+        'json'
+      );
+      // setTokenSentToServer(true);
+    },
+    setTokenSentToServer(type) {
+      if (type) return;
+      // TODO: Delete Register Token From Your Server
+    },
+
+    login() {
+      setTimeout(() => {
         let data = {
           user: this.username,
           password: secret.Encrypt(this.password),
         };
-
         this.$store.dispatch('userLogin', data);
+      }, 3000);
     },
-    initFCM () {
-        console.log('initFCM')
-      this.$messaging.onTokenRefresh(() => {
-        this.$messaging.getToken().then((refreshedToken) => {
-          console.log('Token refreshed.')
-          this.setTokenSentToServer(false)
-          this.sendTokenToServer(refreshedToken)
+
+    unbind() {
+      console.log('456');
+      this.$messaging
+        .getToken()
+        .then((currentToken) => {
+          console.log('currentToken1', currentToken);
+          $.post(
+            'https://porter-alpha.dynacloud.co/ajax.php',
+            {
+              device_id: currentToken,
+              action: 'unbind',
+            },
+            function(result) {
+              console.log(result);
+              if (result.status == true) {
+                alert(result.message);
+                window.location.reload();
+              } else {
+                alert(result.message);
+              }
+            },
+            'json'
+          );
         })
-      })
+        .catch((err) => {
+          console.log('An error occurred while retrieving token. ', err);
+          // this.setTokenSentToServer(false);
+        });
     },
-    registeFCM () {
-      this.$messaging.requestPermission().then(() => {
-        console.log('Notification permission granted.')
-        this.getToken()
-      }).catch((err) => {
-        console.log('Unable to get permission to notify.', err)
-      })
-    },
-    getToken () {
-      this.$messaging.getToken().then((currentToken) => {
-        if (currentToken) {
-          this.sendTokenToServer(currentToken)
-        } else {
-          console.log('No Instance ID token available. Request permission to generate one.')
-          // Show permission UI.
-          this.setTokenSentToServer(false)
-        }
-      }).catch((err) => {
-        console.log('An error occurred while retrieving token. ', err)
-        this.setTokenSentToServer(false)
-      })
-    },
-    sendTokenToServer (token) {
-      // TODO: Send Token To Your Server
-    },
-    setTokenSentToServer (type) {
-      if (type) return
-      // TODO: Delete Register Token From Your Server
-    }
-
-  }
-
+  },
 };
 </script>
 <style>

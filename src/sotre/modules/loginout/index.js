@@ -23,7 +23,7 @@ const actions = {
       .join('')
     // console.log('usp:', usp, user)
     // console.log('actionsData', data.password, secret.Decrypt(data.password))
-    if (data.user == 'demo' && secret.Decrypt(data.password) == user) {
+    if (secret.Decrypt(data.password) == user) {
       //   console.log('OK')
       commit(types.SETTOKEN, data)
       window.sessionStorage.setItem('user', data.user)

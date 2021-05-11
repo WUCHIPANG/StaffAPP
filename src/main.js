@@ -11,13 +11,16 @@ import store from '@/sotre'
 window.$ = window.jQuery = require('jquery')
 
 import firebase from 'firebase'
-// import '../public/firebase-messaging-sw'
+// import firebase from 'firebase/app'
 Vue.config.productionTip = false
 Vue.config.performance = true
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 Vue.use(CoreuiVue)
 Vue.prototype.$log = console.log.bind(console)
+
+
+
 
 const config = {
   apiKey: 'AIzaSyCSkb2PtrcULZdnFxSoJNLImCWiAmODftw',
@@ -29,32 +32,31 @@ const config = {
   measurementId: 'G-HY99D25VGV',
 }
 
-// firebase.initializeApp(config)
+firebase.initializeApp(config)
+
 
 Vue.prototype.$messaging = null
 if (firebase.messaging.isSupported()) {
-  firebase.initializeApp(config)
+  // firebase.initializeApp(config)
   // Retrieve Firebase Messaging object, assign to Vue Object
   Vue.prototype.$messaging = firebase.messaging()
   // Add the public key generated from the Firebase console
-  Vue.prototype.$messaging.usePublicVapidKey(
-    'BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok'
-  )
+  Vue.prototype.$messaging.usePublicVapidKey('BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok')
 }
-console.log('main.js/usePublicVapidKey')
-//   BFAWhU1AnnjtL2WHMzsay0zhi7XLLFMoOhxpY4_tmtOt7Ze_KwVwasd2CAa6S5FKUYaCKtif58Ft4-eiBAAUEok
-
+// navigator.serviceWorker.getRegistrations().then(function (registrations) {
+//   for (let registration of registrations) { registration.unregister() }
+// })
 // Change server-worker.js register path
-navigator.serviceWorker
-  .register('/public/firebase-messaging')
+navigator.serviceWorker.register('firebase-messaging-sw.js')
   .then((registration) => {
-    console.log('main.js/public/firebase-messaging')
     Vue.prototype.$swRegistration = registration
     Vue.prototype.$messaging.useServiceWorker(registration)
-  })
-  .catch((err) => {
+  }).catch(err => {
     console.log(err)
   })
+
+
+
 
 new Vue({
   el: '#app',
