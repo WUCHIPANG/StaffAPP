@@ -136,23 +136,23 @@ export default {
       console.log('Sending token to server...');
       // TODO: Send Token To Your Server
       console.log('token', token, data);
-      $.post(
-        'https://porter-alpha.dynacloud.co/ajax.php',
-        {
-          username: this.username,
-          device_id: token,
-          action: 'bind',
-        },
-        function(result) {
-          if (result.status == true) {
-            sessionStorage.setItem('token', token);
-            window.location.reload();
-          } else {
-            alert(result.message);
-          }
-        },
-        'json'
-      );
+    //   $.post(
+    //     'https://porter-alpha.dynacloud.co/ajax.php',
+    //     {
+    //       username: this.username,
+    //       device_id: token,
+    //       action: 'bind',
+    //     },
+    //     function(result) {
+    //       if (result.status == true) {
+    //         sessionStorage.setItem('token', token);
+    //         window.location.reload();
+    //       } else {
+    //         alert(result.message);
+    //       }
+    //     },
+    //     'json'
+    //   );
       this.$store.dispatch('userLogin', data);
       // setTokenSentToServer(true);
     },

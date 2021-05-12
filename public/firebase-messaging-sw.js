@@ -1,24 +1,24 @@
 importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js')
 importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js')
-  const config = {
-        apiKey: 'AIzaSyCSkb2PtrcULZdnFxSoJNLImCWiAmODftw',
-        authDomain: 'dyna-cloud.firebaseapp.com',
-        projectId: 'dyna-cloud',
-        storageBucket: 'dyna-cloud.appspot.com',
-        messagingSenderId: '752582535911',
-        appId: '1:752582535911:web:a1a064b13ae5cda3d69042',
-        measurementId: 'G-HY99D25VGV',
-      };
-firebase.initializeApp(config);
+const config = {
+  apiKey: 'AIzaSyCSkb2PtrcULZdnFxSoJNLImCWiAmODftw',
+  authDomain: 'dyna-cloud.firebaseapp.com',
+  projectId: 'dyna-cloud',
+  storageBucket: 'dyna-cloud.appspot.com',
+  messagingSenderId: '752582535911',
+  appId: '1:752582535911:web:a1a064b13ae5cda3d69042',
+  measurementId: 'G-HY99D25VGV',
+}
+firebase.initializeApp(config)
 
 const messaging = firebase.messaging()
 
 //網站開啟時，收到推播
-this.$messaging.onMessage(payload => {
-  console.log('Message receiver ', payload);
-  let notification = payload.notification;
-  console.log('Notification: ', notification);
-});
+// this.$messaging.onMessage(payload => {
+//   console.log('Message receiver ', payload);
+//   let notification = payload.notification;
+//   console.log('Notification: ', notification);
+// });
 //Background Message Handler
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log(

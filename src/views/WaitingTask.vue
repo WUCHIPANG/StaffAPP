@@ -90,6 +90,20 @@
         </CAlert>
       </CCardBody>
     </CCard>
+     <div>
+      <CModal :show.sync="darkModal" :no-close-on-backdrop="true" :centered="true" title="Modal title 2" size="lg" color="dark" style="font-size:28px;">
+        負責區域:A棟8樓B區(A08B)<br />
+        型態:固定駐點
+        <template #header>
+          <h5 class="modal-title">今日負責</h5>
+          <CButtonClose @click="darkModal = false" class="text-white" />
+        </template>
+        <template #footer>
+          <!-- <CButton @click="darkModal = false" color="danger">確定</CButton> -->
+          <CButton @click="darkModal = false" color="success" size="lg">確認</CButton>
+        </template>
+      </CModal>
+    </div>
   </div>
 </template>
 <script>
@@ -103,6 +117,8 @@ export default {
       alert2: true,
       isPassing1: false,
       isPassing2: false,
+       darkModal: true,
+
     };
   },
   components: { dragVerify },
