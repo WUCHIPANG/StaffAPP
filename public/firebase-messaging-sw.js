@@ -10,16 +10,22 @@ importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js')
         measurementId: 'G-HY99D25VGV',
       };
 firebase.initializeApp(config);
-      
+
 const messaging = firebase.messaging()
 
-// Background Message Handler
+//網站開啟時，收到推播
+this.$messaging.onMessage(payload => {
+  console.log('Message receiver ', payload);
+  let notification = payload.notification;
+  console.log('Notification: ', notification);
+});
+//Background Message Handler
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log(
     '[firebase-messaging-sw.js] Received background message ',
     payload
   )
-  // Customize notification here
+  //Customize notification here
   var notification = payload.notification
   var notificationTitle = notification.title
   var notificationOptions = {

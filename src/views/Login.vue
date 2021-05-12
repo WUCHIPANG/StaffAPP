@@ -25,20 +25,11 @@ console.log('hello');
                     </CInput>
                     <CRow>
                       <CCol col="6" class="text-left">
-                        <CButton
-                          color="primary"
-                          id="bind"
-                          size="lg"
-                          class="px-4"
-                          @click="
-                            registeFCM;
-                            login(username, password);
-                          "
-                          >登入</CButton
-                        >
+                        <CButton color="primary" id="bind" size="lg" class="px-4" @click="registeFCM(username, password)">登入</CButton>
                         <p></p>
+                        <!-- login(username, password); -->
 
-                        <button @click="registeFCM">registeFCM</button>
+                        <!-- <button @click="registeFCM">registeFCM</button> -->
                         <button @click="unbind">Unbind</button>
                       </CCol>
                       <CCol col="6" class="text-right">
@@ -100,26 +91,34 @@ export default {
         });
       });
     },
-    registeFCM() {
+    registeFCM(username, password) {
+      console.log('data', username, password);
+      let data = {
+        user: username,
+        password: secret.Encrypt(password),
+      };
+      console.log('dataArr', data);
+
       this.$messaging
         .requestPermission()
         .then(() => {
           console.log('Notification permission granted.');
-          this.getToken();
+          this.getToken(data);
         })
         .catch((err) => {
           console.log('Unable to get permission to notify.', err);
         });
     },
-    getToken() {
-      console.log('123');
+    getToken(data) {
       this.$messaging
-        .getToken()
+        .getToken(data)
         .then((currentToken) => {
-          console.log('currentToken1', currentToken);
+          console.log('getToken', data);
+          // console.log('currentToken1', currentToken);
           if (currentToken) {
-            console.log('currentToken2', currentToken);
-            this.sendTokenToServer(currentToken);
+            // console.log('currentToken2', currentToken);
+
+            this.sendTokenToServer(currentToken, data);
             console.log('send');
           } else {
             console.log('No Instance ID token available. Request permission to generate one.');
@@ -133,10 +132,10 @@ export default {
           this.setTokenSentToServer(false);
         });
     },
-    sendTokenToServer(token) {
+    sendTokenToServer(token, data) {
       console.log('Sending token to server...');
       // TODO: Send Token To Your Server
-      console.log('token', token);
+      console.log('token', token, data);
       $.post(
         'https://porter-alpha.dynacloud.co/ajax.php',
         {
@@ -146,6 +145,7 @@ export default {
         },
         function(result) {
           if (result.status == true) {
+            sessionStorage.setItem('token', token);
             window.location.reload();
           } else {
             alert(result.message);
@@ -153,6 +153,7 @@ export default {
         },
         'json'
       );
+      this.$store.dispatch('userLogin', data);
       // setTokenSentToServer(true);
     },
     setTokenSentToServer(type) {
@@ -160,15 +161,15 @@ export default {
       // TODO: Delete Register Token From Your Server
     },
 
-    login() {
-      setTimeout(() => {
-        let data = {
-          user: this.username,
-          password: secret.Encrypt(this.password),
-        };
-        this.$store.dispatch('userLogin', data);
-      }, 3000);
-    },
+    // login() {
+    //   setTimeout(() => {
+    //     let data = {
+    //       user: this.username,
+    //       password: secret.Encrypt(this.password),
+    //     };
+    //     this.$store.dispatch('userLogin', data);
+    //   }, 3000);
+    // },
 
     unbind() {
       console.log('456');
@@ -186,6 +187,7 @@ export default {
               console.log(result);
               if (result.status == true) {
                 alert(result.message);
+                sessionStorage.removeItem('token');
                 window.location.reload();
               } else {
                 alert(result.message);

@@ -4,3 +4,7 @@ https://soarlin.github.io/2018/06/02/Vue-%E4%BD%BF%E7%94%A8Firebase-Cloud-Messag
 https://zh.codeprj.com/blog/a247511.html
 
 https://www.coder.work/article/1326166
+
+http://blog.changyy.org/2017/10/firebase-firebase-fcm-web-app-debug.html
+
+https://ithelp.ithome.com.tw/questions/10196727
