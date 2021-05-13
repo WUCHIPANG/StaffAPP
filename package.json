@@ -48,6 +48,7 @@
     "vue-axios": "^3.2.4",
     "vue-drag-verify": "^1.0.6",
     "vue-drag-verify2": "^1.1.0",
+    "vue-esign": "^1.0.5",
     "vue-router": "^3.4.9",
     "vuex": "^3.6.2"
   },
