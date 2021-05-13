@@ -40,7 +40,6 @@
               handlerIcon="fa fa-angle-double-right"
               successIcon="fa fa-check"
               radius="8px"
-             
               @passcallback="passcallback"
             >
             </drag-verify>
@@ -90,12 +89,11 @@
         </CAlert>
       </CCardBody>
     </CCard>
-     <div>
+    <div>
       <CModal :show.sync="darkModal" :no-close-on-backdrop="true" :centered="true" title="Modal title 2" size="lg" color="dark" style="font-size:28px;">
-        負責區域:A棟8樓B區(A08B)<br />
-        型態:固定駐點
+        繼續執行<br />編號:202105130912派單
         <template #header>
-          <h5 class="modal-title">今日負責</h5>
+          <h5 class="modal-title">接續先前派單</h5>
           <CButtonClose @click="darkModal = false" class="text-white" />
         </template>
         <template #footer>
@@ -117,8 +115,7 @@ export default {
       alert2: true,
       isPassing1: false,
       isPassing2: false,
-       darkModal: true,
-
+      darkModal: true,
     };
   },
   components: { dragVerify },

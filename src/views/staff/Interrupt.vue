@@ -3,7 +3,7 @@
     <CCard>
       <CCardBody>
         <CForm>
-          <CSelect label="中斷/異常 通報" horizontal :options="options" placeholder="領藥異常" />
+          <CSelect label="中斷/異常 通報" horizontal :options="['暫停目前派單', '終止目前派單','異常通報']" placeholder="" />
           <CTextarea label="備註" placeholder="" horizontal rows="9" />
           <!-- <div class="form-group form-actions positionR">
             <CButton block color="dark" type="submit" variant="outline" class="sendButton">送出</CButton>
