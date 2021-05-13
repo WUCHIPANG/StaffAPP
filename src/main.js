@@ -48,6 +48,32 @@ if (firebase.messaging.isSupported()) {
 //   for (let registration of registrations) { registration.unregister() }
 // })
 // Change server-worker.js register path
+
+const messaging = firebase.messaging()
+//網站開啟時，收到推播
+messaging.onMessage((payload) => {
+  console.log('Message receiver ', payload)
+  let notification = payload.notification
+  console.log('Notification: ', notification)
+
+  //Customize notification here
+
+  var notificationTitle = notification.title
+  var notificationOptions = {
+    body: notification.body,
+    icon: '/public/img/Logo.png',
+  }
+  console.log(
+    'notificationTitle',
+    notificationTitle,
+    'notificationOptions',
+    notificationOptions
+  )
+  window.alert('訊息')
+})
+
+// https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/645442/
+
 navigator.serviceWorker
   .register('firebase-messaging-sw.js')
   .then((registration) => {

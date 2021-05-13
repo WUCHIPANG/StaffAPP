@@ -13,12 +13,6 @@ firebase.initializeApp(config)
 
 const messaging = firebase.messaging()
 
-//網站開啟時，收到推播
-// this.$messaging.onMessage(payload => {
-//   console.log('Message receiver ', payload);
-//   let notification = payload.notification;
-//   console.log('Notification: ', notification);
-// });
 //Background Message Handler
 messaging.setBackgroundMessageHandler(function(payload) {
   console.log(
